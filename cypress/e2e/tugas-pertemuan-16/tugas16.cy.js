@@ -41,10 +41,9 @@ describe('Tugas 16 Intercept Login OrangeHRM', ()=>{
 
   // Test Case 4
   it('TC_LOG_04 - Wrong username, valid password', () => {
-    cy.intercept('POST', '**/auth/validate').as('loginFail2')
-
-    cy.get('input[name="username"]').type('adminnn')
-    cy.get('input[name="password"]').type('admin123')
+      cy.get('input[name="username"]').type('adminnn')
+      cy.get('input[name="password"]').type('admin123')
+      cy.intercept('POST', '**/auth/validate').as('loginFail2')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@loginFail2')
@@ -53,10 +52,10 @@ describe('Tugas 16 Intercept Login OrangeHRM', ()=>{
 
   //// Test Case 5
   it('TC_LOG_05 - Wrong username & password', () => {
-    cy.intercept('POST', '**/auth/validate').as('loginFail3')
-
-    cy.get('input[name="username"]').type('adminnn')
-    cy.get('input[name="password"]').type('admin1234')
+      
+      cy.get('input[name="username"]').type('adminnn')
+      cy.get('input[name="password"]').type('admin1234')
+      cy.intercept('POST', '**/auth/validate').as('loginFail3')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@loginFail3')
@@ -64,80 +63,79 @@ describe('Tugas 16 Intercept Login OrangeHRM', ()=>{
   })
 
   // // Test Case 6
-  it('TC_LOG_06 - Username with leading space', () => {
-    cy.intercept('POST', '**/auth/validate').as('loginFail4')
+  // it('TC_LOG_06 - Username with leading space cara 2', () => {
+      
+  //     cy.get('input[name="username"]').type(' Admin')
+  //     cy.get('input[name="password"]').type('admin123')
+  //     cy.intercept('POST', '**/auth/validate').as('loginFail4')
+  //   cy.get('button[type="submit"]').click()
 
-    cy.get('input[name="username"]').type(' Admin')
-    cy.get('input[name="password"]').type('admin123')
-    cy.get('button[type="submit"]').click()
+  //   cy.wait('@loginFail4')
+  //   cy.get('.oxd-alert-content').should('contain', 'Invalid credentials')
+  // })
 
-    cy.wait('@loginFail4')
-    cy.get('.oxd-alert-content').should('contain', 'Invalid credentials')
-  })
-
-  //// Test Case 7
-  it('TC_LOG_07 - Password Huruf Besar Semua', () => {
-    cy.intercept('POST', '**/auth/validate').as('loginFail5')
-
-    cy.get('input[name="username"]').type('Admin')
-    cy.get('input[name="password"]').type('ADMIN123')
+  //// Test Case 6
+  it('TC_LOG_06 - Password Huruf Besar Semua', () => {
+      
+      cy.get('input[name="username"]').type('Admin')
+      cy.get('input[name="password"]').type('ADMIN123')
+      cy.intercept('POST', '**/auth/validate').as('loginFail5')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@loginFail5')
     cy.get('.oxd-alert-content').should('contain', 'Invalid credentials')
   })
 
-  // 7 Login sukses → dashboard load
-  it('TC_LOG_07 - Login success menuju Dashboard', () => {
-    cy.intercept('GET', '**/dashboard/**').as('dashboardLoad')
+  // 8 Login sukses → dashboard load
+  // it('TC_LOG_08 - Login success menuju Dashboard', () => {
+      
+  //     cy.get('input[name="username"]').type('Admin')
+  //     cy.get('input[name="password"]').type('admin123')
+  //     cy.intercept('GET', '**/dashboard/**').as('dashboardLoad')
+  //   cy.get('button[type="submit"]').click()
 
-    cy.get('input[name="username"]').type('Admin')
-    cy.get('input[name="password"]').type('admin123')
-    cy.get('button[type="submit"]').click()
+  //   cy.wait('@dashboardLoad')
+  //   cy.url().should('include', '/dashboard')
+  // })
 
-    cy.wait('@dashboardLoad')
-    cy.url().should('include', '/dashboard')
-  })
-
-  // 78 Login sukses → action summary
-  it('TC_LOG_08 - Dashboard action summary loaded', () => {
-    cy.intercept('GET', '**/api/v2/dashboard/employees/locations').as('Locations')
-
-    cy.get('input[name="username"]').type('Admin')
-    cy.get('input[name="password"]').type('admin123')
+  // 7 Login sukses → action summary
+  it('TC_LOG_07 - Dashboard Locations loaded', () => {
+      
+      cy.get('input[name="username"]').type('Admin')
+      cy.get('input[name="password"]').type('admin123')
+      cy.intercept('GET', '**/api/v2/dashboard/employees/locations').as('Locations')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@Locations')
     cy.get('.oxd-topbar-header-breadcrumb').should('contain', 'Dashboard')
   })
 
-  // 9 Login sukses → time at work
-  it('TC_LOG_09 - Dashboard time at work loaded', () => {
-    cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/employees/time-at-work*').as('timeAtWork')
-    cy.get('input[name="username"]').type('Admin')
-    cy.get('input[name="password"]').type('admin123')
-    cy.get('button[type="submit"]').click()
+  // 8 Login sukses → time at work
+  it('TC_LOG_08 - Dashboard time at work loaded', () => {
+      cy.get('input[name="username"]').type('Admin')
+      cy.get('input[name="password"]').type('admin123')
+      cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/employees/time-at-work*').as('timeAtWork')
+      cy.get('button[type="submit"]').click()
 
     cy.wait('@timeAtWork')
   })
 
-  // 10 Login sukses → shortcuts API
-  it('TC_LOG_10 - Dashboard shortcuts loaded', () => {
+  // 9 Login sukses → shortcuts API
+  it('TC_LOG_9 - Dashboard shortcuts loaded', () => {
     // cy.intercept('GET', '**/api/v2/dashboard/shortcuts').as('shortcuts')
-    cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/shortcuts').as('shortcuts')
-
     cy.get('input[name="username"]').type('Admin')
     cy.get('input[name="password"]').type('admin123')
+    cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/shortcuts').as('shortcuts')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@shortcuts')
   })
 
-  // 11 Login sukses → buzz feed
-  it('TC_LOG_11 - Dashboard buzz feed loaded', () => {
-    cy.intercept('GET', '**/api/v2/buzz/feed*').as('buzzFeed')
-    cy.get('input[name="username"]').type('Admin')
-    cy.get('input[name="password"]').type('admin123')
+  // 10 Login sukses → buzz feed
+  it('TC_LOG_10 - Dashboard buzz feed loaded', () => {
+      cy.get('input[name="username"]').type('Admin')
+      cy.get('input[name="password"]').type('admin123')
+      cy.intercept('GET', '**/api/v2/buzz/feed*').as('buzzFeed')
     cy.get('button[type="submit"]').click()
     cy.wait('@buzzFeed')
   })

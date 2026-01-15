@@ -1,0 +1,12 @@
+{
+    "validUsername":"Admin",
+    "validPassword":"admin123",
+    "invalidUsername":"adminnn",
+    "invalidPassword":"admin1234",
+    "spaceUsername":" Admin",
+    "uppercasePassword":"ADMIN123"
+
+
+
+
+}
