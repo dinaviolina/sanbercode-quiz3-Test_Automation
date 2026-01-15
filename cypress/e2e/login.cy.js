@@ -72,6 +72,5 @@ it('TC_LOG_011 - Memeriksa inputan password huruf besar semua (Negative)', () =>
     cy.get('input[name="password"]').type('admin12')
     cy.get('button[type="submit"]').click()
     cy.get('.oxd-alert-content ').should('be.visible').and('contain', 'Invalid credentials')
-
   })
 })
