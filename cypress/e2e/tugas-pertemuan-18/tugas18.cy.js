@@ -47,8 +47,11 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
             }
         }).then((response)=>{
                 expect(response.status).to.eq(201)
-                // expect(response.body).to.have.property('name','Dina Violina, S.Kom., M.Kom')
-                // expect(response.body).to.have.property('job')
+                expect(response.body).to.have.property('name','Dina Violina, S.Kom., M.Kom')
+                expect(response.body).to.have.property('job','QA')
+                expect(response.body).to.have.property('createdAt')
+
+            
             })
     })
     it('5. Verify Session', ()=>{
@@ -82,7 +85,10 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
             headers:{'x-api-key':"reqres_fb6834692dd24d89a6038287d22bb188"}
         }).then((response)=>{
             expect(response.status).to.eq(201)
-
+            expect(response.body).to.include({
+                name:"purwowidodo",
+                job:"leader"
+            })
         })
     })
     it('7. Register - unsuccessfull', ()=>{
@@ -112,7 +118,7 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
             headers:{'x-api-key':"reqres_fb6834692dd24d89a6038287d22bb188"}
         }).then((response)=>{
             expect(response.status).to.eq(400)
-            // expect(response.body.error).to.eq('Missing password, check ya')
+            expect(response.body.error).to.eq('Missing password')
 
         })
     })
@@ -149,7 +155,7 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
         cy.request({
             method:'GET',
             url:'https://reqres.in/api/unknown/23',
-             failOnStatusCode: false,
+            failOnStatusCode: false,
             headers:{'x-api-key':"reqres_fb6834692dd24d89a6038287d22bb188"}
 
         }).then((response)=>{
@@ -159,7 +165,7 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
     })
     
     it('12. Update User', ()=>{
-         cy.request({
+        cy.request({
             method:'PUT',
             url:'https://reqres.in/api/users/2',
             body:{
@@ -181,6 +187,7 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
             headers:{'x-api-key':"reqres_fb6834692dd24d89a6038287d22bb188"}
         }).then((response)=>{
             expect(response.status).to.eq(204)
+            expect(response.body).to.be.empty
         })
     })
     it('14. Patch Update User', ()=>{
@@ -206,6 +213,9 @@ describe('API Automation using Cypress - Tugas 18', ()=>{
             headers:{'x-api-key':"reqres_fb6834692dd24d89a6038287d22bb188"}
         }).then((response)=>{
             expect(response.status).to.eq(200)
+            expect(response.body).to.have.property('data')
+            expect(response.body.data).to.be.an('array')
+
             
         })
     })
